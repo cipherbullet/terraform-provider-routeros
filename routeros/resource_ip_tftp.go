@@ -16,7 +16,8 @@ func ResourceIPTftp() *schema.Resource {
 		"ip_addresses": {
 			Type:         schema.TypeSet,
 			Optional:     true,
-			Description:  "",
+			Default: 	  "0.0.0.0/0",
+			Description:  "range of IP addresses accepted as clients if empty 0.0.0.0/0 will be used",
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 				ValidateFunc: validation.IsCIDR,
@@ -25,30 +26,31 @@ func ResourceIPTftp() *schema.Resource {
 		"req_filename": {
 			Type:		 schema.TypeString,
 			Optional:	 true,
-			Description: "",
+			Default: 	 ".*",
+			Description: "requested filename as regular expression (regex) if field is left empty it defaults to .*",
 		},
 		"real_filename": {
 			Type:         schema.TypeString,
 			Optional:     true,
-			Description:  "",
+			Description:  "if req-filename and real-filename values are set and valid, the requested filename will be replaced with matched file",
 		},
 		"allow": {
 			Type:         schema.TypeBool,
 			Optional:     true,
 			Default:      true,
-			Description:  "",
+			Description:  "to allow connection if req-filename and real-filename are set. if no, connection will be interrupted",
 		},
 		"read_only": {
 			Type:         schema.TypeBool,
 			Optional:     true,
 			Default:      true,
-			Description:  "",
+			Description:  "sets if file can be written to, if set to 'no' write attempt will fail with error",
 		},
 		"allow_rollover": {
 			Type:         schema.TypeBool,
 			Optional:     true,
 			Default:      false,
-			Description:  "",
+			Description:  "allow sequence number to roll over when maximum value is reached for large downloads",
 		},
 		"allow_overwrite": {
 			Type:         schema.TypeBool,
@@ -59,14 +61,14 @@ func ResourceIPTftp() *schema.Resource {
 		"reading_window_size": {
 			Type:         schema.TypeString,
 			Optional:     true,
-			Description:  "",
 			Default:      "none",
+			Description:  "",
 			ValidateFunc: validation.StringInSlice([]string{"none", "pipelining"}, false),
 		},
 		"hits": {
 			Type:         schema.TypeInt,
 			Computed:     true,
-			Description:  "",
+			Description:  "how many times this access rule entry has been used (read-only)",
 		},
 	}
 	return &schema.Resource{

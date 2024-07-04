@@ -16,7 +16,6 @@ func ResourceIPTftp() *schema.Resource {
 		"ip_addresses": {
 			Type:         schema.TypeSet,
 			Optional:     true,
-			Default: 	  "0.0.0.0/0",
 			Description:  "range of IP addresses accepted as clients if empty 0.0.0.0/0 will be used",
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
